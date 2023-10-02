@@ -7,23 +7,11 @@ public class Bullet : MonoBehaviour, IPoolable
 {
     public void Free()
     {
-
+        gameObject.SetActive(false);
     }
 
     public void New()
     {
-
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        gameObject.SetActive(true);
     }
 }
