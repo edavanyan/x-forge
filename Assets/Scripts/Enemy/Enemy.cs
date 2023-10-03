@@ -9,11 +9,17 @@ public class Enemy : MonoBehaviour, IPoolable
 
     public void Free()
     {
-
+        Die();
     }
 
     public void New()
     {
+        gameObject.SetActive(true);
+    }
 
+    private void Die()
+    {
+        gameObject.SetActive(false);
+        transform.position = new Vector3(int.MaxValue, int.MaxValue, 0);
     }
 }

@@ -6,8 +6,11 @@ public class EnemyMovement : MonoBehaviour
 {
     public Animator animator;
     public Transform destination;
+    private Vector3 destinationPoint;
 
     public float moveSpeed = 1f;
+
+    private float decisionDelay = 0.1f;
 
     public Rigidbody2D rb;
 
@@ -15,14 +18,14 @@ public class EnemyMovement : MonoBehaviour
 
     Vector3 scale = Vector3.one;
 
-    private void Start()
+    private void OnEnable()
     {
         StartCoroutine(ChangeSpeed());
     }
 
     void Update()
     {
-        movement = destination.position - transform.position;
+        movement = destinationPoint - transform.position;
         if (movement.x != 0)
         {
             scale.x = Mathf.Sign(movement.x);
@@ -32,8 +35,13 @@ public class EnemyMovement : MonoBehaviour
 
     private IEnumerator ChangeSpeed()
     {
-        yield return new WaitForSeconds(0.25f);
-        moveSpeed = Random.Range(5, 10) * 0.1f;
+        while (gameObject.activeSelf)
+        {
+            decisionDelay = Random.Range(0.1f, 0.35f);
+            yield return new WaitForSeconds(decisionDelay);
+            destinationPoint = destination.position;
+            moveSpeed = Random.Range(5, 10) * 0.1f;
+        }
     }
 
     private void FixedUpdate()
